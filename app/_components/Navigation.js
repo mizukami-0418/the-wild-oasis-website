@@ -7,13 +7,13 @@ export default function Navigation() {
         <Link href="/">Home</Link>
       </li>
       <li>
-        <Link href="cabins">キャビン</Link>
+        <Link href="cabins">Cabins</Link>
       </li>
       <li>
-        <Link href="about">アバウト</Link>
+        <Link href="about">About</Link>
       </li>
       <li>
-        <Link href="account">アカウント</Link>
+        <Link href="account">Account</Link>
       </li>
     </ul>
   );
