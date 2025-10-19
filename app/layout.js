@@ -11,6 +11,7 @@ const josefin = Josefin_Sans({
 const googleFont = josefin.className;
 
 import "@/app/_styles/globals.css";
+import Header from "@/app/_components/Header";
 
 export const metadata = {
   title: {
@@ -22,13 +23,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="ja">
-      <body className={`${googleFont} bg-blue-200 text-gray-50 min-h-screen"`}>
-        <header>
-          <Logo />
-          <Navigation />
-        </header>
-        <main>{children}</main>
-        <footer>&copy; 2025 The Wild Oasis</footer>
+      <body
+        className={`${googleFont} bg-blue-200 text-gray-50 min-h-screen flex flex-col`}
+      >
+        <Header />
+        <div className="flex-1 px-8 py-12">
+          <main className="max-w-7xl mx-auto">{children}</main>
+        </div>
+        {/* <footer>&copy; 2025 The Wild Oasis</footer> */}
       </body>
     </html>
   );
