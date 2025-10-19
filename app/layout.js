@@ -4,7 +4,10 @@ import Navigation from "@/app/_components/Navigation";
 import "@/app/_styles/globals.css";
 
 export const metadata = {
-  title: "タイトルだよ",
+  title: {
+    template: "%s / The Wild Oasis",
+    default: "ようこそ🤗 / The Wild Oasis",
+  },
 };
 
 export default function RootLayout({ children }) {
