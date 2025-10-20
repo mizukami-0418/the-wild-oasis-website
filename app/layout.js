@@ -27,8 +27,8 @@ export default function RootLayout({ children }) {
         className={`${googleFont} bg-blue-200 text-gray-50 min-h-screen flex flex-col relative`}
       >
         <Header />
-        <div className="flex-1 px-8 py-12">
-          <main className="max-w-7xl mx-auto">{children}</main>
+        <div className="flex-1 px-8 py-12 grid">
+          <main className="max-w-7xl mx-auto w-full">{children}</main>
         </div>
         {/* <footer>&copy; 2025 The Wild Oasis</footer> */}
       </body>
