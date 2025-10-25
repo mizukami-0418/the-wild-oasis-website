@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ja">
       <body
-        className={`${googleFont} bg-blue-200 text-gray-50 min-h-screen flex flex-col relative`}
+        className={`${googleFont} bg-primary-950 text-primary-100 min-h-screen flex flex-col relative`}
       >
         <Header />
         <div className="flex-1 px-8 py-12 grid">
