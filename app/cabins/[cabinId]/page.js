@@ -1,3 +1,4 @@
+import TextExpander from "@/app/_components/TextExpander";
 import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
@@ -34,31 +35,34 @@ export default async function Page({ params }) {
         </div>
 
         <div>
-          <h3 className="text-accent-100 font-black text-7xl mb-5 translate-x-[-254px] bg-primary-950 p-6 pb-1 w-[150%]">
-            Cabin {name}
-          </h3>
+          <h2 className="text-accent-100 font-black text-4xl mb-5 translate-x-[-254px] bg-primary-950 p-6 pb-1 w-[150%]">
+            The Wild Oasis <br />
+            {name}
+          </h2>
 
-          <p className="text-lg text-primary-300 mb-10">{description}</p>
+          <p className="text-lg text-primary-300 mb-10">
+            <TextExpander>{description}</TextExpander>
+          </p>
 
           <ul className="flex flex-col gap-4 mb-7">
             <li className="flex gap-3 items-center">
               <UsersIcon className="h-5 w-5 text-primary-600" />
               <span className="text-lg">
-                For up to <span className="font-bold">{maxCapacity}</span>{" "}
-                guests
+                <span className="font-bold">{maxCapacity}</span>{" "}
+                名様まで宿泊可能
               </span>
             </li>
             <li className="flex gap-3 items-center">
               <MapPinIcon className="h-5 w-5 text-primary-600" />
               <span className="text-lg">
-                Located in the heart of the{" "}
-                <span className="font-bold">Dolomites</span> (Italy)
+                <span className="font-bold">中央アルプス</span>{" "}
+                (日本)の中心部に位置しています。
               </span>
             </li>
             <li className="flex gap-3 items-center">
               <EyeSlashIcon className="h-5 w-5 text-primary-600" />
               <span className="text-lg">
-                Privacy <span className="font-bold">100%</span> guaranteed
+                プライバシーは<span className="font-bold">100%</span> 保証
               </span>
             </li>
           </ul>
