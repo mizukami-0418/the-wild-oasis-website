@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Page() {
   // CHANGE
-  const countryFlag = "pt.jpg";
+  const countryFlag = "/pt.jpg";
   const nationality = "portugal";
 
   return (
@@ -41,6 +41,7 @@ export default function Page() {
               src={countryFlag}
               alt="Country flag"
               className="h-5 rounded-sm"
+              fill
             />
           </div>
 

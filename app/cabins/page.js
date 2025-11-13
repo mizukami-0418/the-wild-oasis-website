@@ -1,14 +1,17 @@
 import { Suspense } from "react";
 import CabinList from "@/app/_components/CabinList";
 import Spinner from "@/app/_components/Spinner";
+import Filter from "../_components/Filter";
+
+export const revalidate = 3600;
 
 export const metadata = {
   title: "Cabins",
 };
 
-// export const revalidate = 3600; // 1 hour
+export default async function Page({ searchParams }) {
+  const filter = searchParams?.capacity ?? "all";
 
-export default async function Page() {
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
@@ -20,8 +23,11 @@ export default async function Page() {
         まるで「もうひとつの我が家」で自然の美しさを満喫できます。
         静かで穏やかな休暇を過ごすのにぴったりの場所。 ようこそ、楽園へ。
       </p>
-      <Suspense fallback={<Spinner />}>
-        <CabinList />
+      <div className="flex justify-end mb-8">
+        <Filter />
+      </div>
+      <Suspense fallback={<Spinner />} key={filter}>
+        <CabinList filter={filter} />
       </Suspense>
     </div>
   );
