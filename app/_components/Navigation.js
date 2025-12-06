@@ -12,7 +12,7 @@ export default async function Navigation() {
             href="/cabins"
             className="hover:text-accent-400 transition-colors"
           >
-            🏡 Cabins
+            Cabins 🏡
           </Link>
         </li>
         <li>
@@ -20,7 +20,7 @@ export default async function Navigation() {
             href="/about"
             className="hover:text-accent-400 transition-colors"
           >
-            🌲 Concept
+            Concept 🌲
           </Link>
         </li>
         <li>
@@ -35,14 +35,14 @@ export default async function Navigation() {
                 alt={session.user.name}
                 referrerPolicy="no-referrer"
               />
-              <span>☕ Lounge</span>
+              <span>Lounge ☕</span>
             </Link>
           ) : (
             <Link
               href="/account"
               className="hover:text-accent-400 transition-colors"
             >
-              ☕ Lounge
+              Lounge ☕
             </Link>
           )}
         </li>
