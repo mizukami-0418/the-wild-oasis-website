@@ -34,7 +34,7 @@ function UpdateProfileForm({ guest, children }) {
 
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label htmlFor="nationality">Where are you from?</label>
+          <label htmlFor="nationality">出身はどこの国?</label>
           <Image
             src={countryFlag}
             alt="Country flag"
