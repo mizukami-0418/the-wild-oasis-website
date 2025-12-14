@@ -37,16 +37,25 @@ export async function deleteReservation(bookingId) {
   const session = await auth();
   if (!session) {
     throw new Error("ログインしてね 😄");
-
-    const { error } = await supabase
-      .from("bookings")
-      .delete()
-      .eq("id", bookingId);
-
-    if (error) {
-      throw new Error("予約を削除できませんでした 😄");
-    }
   }
+
+  const guestBookings = await getBookings(session.user.guestId);
+
+  const guestBookingIds = guestBookings.map((booking) => booking.id);
+
+  if (!guestBookingIds.includes(bookingId)) {
+    throw new Error("この予約を削除する権限がありません 😄");
+  }
+
+  const { error } = await supabase
+    .from("bookings")
+    .delete()
+    .eq("id", bookingId);
+
+  if (error) {
+    throw new Error("予約を削除できませんでした 😄");
+  }
+  revalidatePath("/account/reservations");
 }
 
 export async function signInAction() {
