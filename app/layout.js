@@ -1,8 +1,6 @@
-import Logo from "@/app/_components/Logo";
-import Navigation from "@/app/_components/Navigation";
-
 import { Josefin_Sans } from "next/font/google";
 
+// Setting up Google Font
 const josefin = Josefin_Sans({
   subsets: ["latin"],
   display: "swap",
@@ -13,7 +11,9 @@ const googleFont = josefin.className;
 import "@/app/_styles/globals.css";
 import Header from "@/app/_components/Header";
 import { ReservationProvider } from "./_components/ReservationContext";
+import { Root } from "react-day-picker";
 
+// metadata
 export const metadata = {
   title: {
     template: "%s / The Wild Oasis",
@@ -21,6 +21,7 @@ export const metadata = {
   },
 };
 
+// RootLayout Setup
 export default function RootLayout({ children }) {
   return (
     <html lang="ja">
@@ -33,7 +34,9 @@ export default function RootLayout({ children }) {
             <ReservationProvider>{children}</ReservationProvider>
           </main>
         </div>
-        {/* <footer>&copy; 2025 The Wild Oasis</footer> */}
+        <footer className="text-center border-t border-primary-900 text-lg py-4">
+          &copy; 2025 The Wild Oasis
+        </footer>
       </body>
     </html>
   );

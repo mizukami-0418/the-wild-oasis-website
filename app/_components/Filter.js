@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
+// Filter of Cabins by capacity
 function Filter() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -9,6 +10,7 @@ function Filter() {
 
   const activeFilter = searchParams.get("capacity") ?? "all";
 
+  // Handle filter change by updating URL search params
   function handleFilter(filter) {
     const params = new URLSearchParams(searchParams);
     params.set("capacity", filter);

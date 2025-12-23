@@ -16,13 +16,13 @@ export default async function Page() {
     <div className="grid grid-cols-5 gap-x-24 gap-y-32 text-lg items-center">
       <div className="col-span-3">
         <h1 className="text-4xl mb-10 text-accent-400 font-medium">
-          Welcome to The Wild Oasis
+          The Wild Oasis へようこそ 😭
         </h1>
 
         <div className="space-y-8">
           <p>
             自然の美しさと快適な暮らしが見事に調和する場所。
-            イタリアのドロミテ山脈の中心にひっそりと佇む、まさに「もうひとつの楽園」です。
+            日本アルプスの中心にひっそりと佇む、まさに「もうひとつの楽園」です。
             しかし、魅力は豪華なキャビンだけではありません。
             自然と再びつながり、家族とともにシンプルな喜びを味わう——その体験こそが、この場所の本当の贅沢なのです。
           </p>
@@ -83,7 +83,7 @@ export default async function Page() {
               href="/cabins"
               className="inline-block mt-4 bg-accent-500 px-8 py-5 text-primary-800 text-lg font-semibold hover:bg-accent-600 transition-all"
             >
-              Explore our luxury cabins
+              キャビン一覧を見る 🏕️
             </Link>
           </div>
         </div>

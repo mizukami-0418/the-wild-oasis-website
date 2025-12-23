@@ -1,7 +1,7 @@
-import { unstable_noStore as noStore } from "next/cache";
 import CabinCard from "@/app/_components/CabinCard";
 import { getCabins } from "../_lib/data-service";
 
+// Cabin List Component with filtering by capacity
 async function CabinList({ filter }) {
   // noStore(); Disable caching for this component
   const cabins = await getCabins();

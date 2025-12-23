@@ -2,9 +2,9 @@ import Image from "next/image";
 import TextExpander from "@/app/_components/TextExpander";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 
+// Cabin component to display detailed information about a cabin
 export default function Cabin({ cabin }) {
-  const { id, regularPrice, discount, name, maxCapacity, image, description } =
-    cabin;
+  const { name, maxCapacity, image, description } = cabin;
   return (
     <div className="grid grid-cols-[3fr_4fr] gap-20 border border-primary-800 py-3 px-10 mb-24">
       <div className="relative scale-[1.15] -translate-x-3">

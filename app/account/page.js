@@ -1,9 +1,10 @@
 import { auth } from "../_lib/auth";
 
 export const metadata = {
-  title: "Guest Area",
+  title: "Lounge",
 };
 
+// Lounge Page showing Welcome Message！
 export default async function Page() {
   const session = await auth();
 

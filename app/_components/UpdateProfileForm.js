@@ -1,8 +1,6 @@
 "use client";
 
-import { useFormStatus } from "react-dom";
 import { updateGuest } from "../_lib/actions";
-import Image from "next/image";
 import SubmitButton from "./SubmitButton";
 
 function UpdateProfileForm({ guest, children }) {

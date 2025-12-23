@@ -15,7 +15,7 @@ async function SelectCountry({ defaultCountry, name, id, className }) {
       defaultValue={`${defaultCountry}%${flag}`}
       className={className}
     >
-      <option value="">Select country...</option>
+      <option value="">国を選択してください...</option>
       {countries.map((c) => (
         <option key={c.name} value={`${c.name}%${c.flag}`}>
           {c.name}

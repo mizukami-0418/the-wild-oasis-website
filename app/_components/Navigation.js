@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { auth } from "../_lib/auth";
 
+// Navigation Component
 export default async function Navigation() {
   const session = await auth();
 
@@ -12,7 +13,7 @@ export default async function Navigation() {
             href="/cabins"
             className="hover:text-accent-400 transition-colors"
           >
-            Cabins 🏡
+            🏡 Cabins
           </Link>
         </li>
         <li>
@@ -20,7 +21,7 @@ export default async function Navigation() {
             href="/about"
             className="hover:text-accent-400 transition-colors"
           >
-            Concept 🌲
+            🌲 Concept
           </Link>
         </li>
         <li>
@@ -29,20 +30,20 @@ export default async function Navigation() {
               href="/account"
               className="hover:text-accent-400 transition-colors flex items-center gap-4"
             >
+              <span>☕ Lounge</span>
               <img
                 className="h-8 rounded-full"
                 src={session.user.image}
                 alt={session.user.name}
                 referrerPolicy="no-referrer"
               />
-              <span>Lounge ☕</span>
             </Link>
           ) : (
             <Link
               href="/account"
               className="hover:text-accent-400 transition-colors"
             >
-              Lounge ☕
+              ☕ Lounge
             </Link>
           )}
         </li>

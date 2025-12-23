@@ -1,20 +1,14 @@
 import Cabin from "@/app/_components/Cabin";
 import Reservation from "@/app/_components/Reservation";
 import Spinner from "@/app/_components/Spinner";
-import {
-  getBookedDatesByCabinId,
-  getCabin,
-  getCabins,
-  getSettings,
-} from "@/app/_lib/data-service";
-import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
-import Image from "next/image";
+import { getCabin, getCabins } from "@/app/_lib/data-service";
 import { Suspense } from "react";
 
 export async function generateMetadata({ params }) {
-  const { name } = await getCabin(params.cabinId);
+  const p = await params;
+  const { name, id } = await getCabin(p.cabinId);
   return {
-    title: `Cabin ${name}`,
+    title: `Cabin ${id}`,
   };
 }
 
@@ -26,7 +20,8 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }) {
-  const cabin = await getCabin(params.cabinId);
+  const p = await params;
+  const cabin = await getCabin(p.cabinId);
 
   return (
     <div className="max-w-6xl mx-auto mt-8">
@@ -34,10 +29,9 @@ export default async function Page({ params }) {
 
       <div>
         <h2 className="text-5xl font-semibold text-center mb-10 text-accent-400">
-          この部屋を予約する。代金は到着時にお支払いください。
+          この部屋を予約しますか？お支払いは現地でもOK！
         </h2>
       </div>
-      {/* <div className="grid grid-cols-2 border border-primary-800 min-h-[400px]"> */}
       <Suspense fallback={<Spinner />}>
         <Reservation cabin={cabin} />
       </Suspense>

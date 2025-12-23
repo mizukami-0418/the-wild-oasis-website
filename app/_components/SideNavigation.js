@@ -9,6 +9,7 @@ import SignOutButton from "./SignOutButton";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+// Navigation links for Side Navigation
 const navLinks = [
   {
     name: "Home",
@@ -27,6 +28,7 @@ const navLinks = [
   },
 ];
 
+// Side Navigation Component for Lounge Section
 function SideNavigation() {
   const pathname = usePathname();
 

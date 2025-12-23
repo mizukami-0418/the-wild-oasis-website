@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import bg from "@/public/bg.png";
 
+// Top Page
 export default function Page() {
   return (
     <main className="mt-24">
@@ -22,7 +23,7 @@ export default function Page() {
           href="/cabins"
           className="bg-accent-500 px-8 py-6 text-primary-800 text-lg font-semibold hover:bg-accent-600 transition-all"
         >
-          Explore luxury cabins
+          楽園への入り口 🏕️
         </Link>
       </div>
     </main>

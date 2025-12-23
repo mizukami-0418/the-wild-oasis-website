@@ -6,6 +6,7 @@ import { supabase } from "./supabase";
 import { getBookings } from "./data-service";
 import { redirect } from "next/navigation";
 
+// Update guest profile information
 export async function updateGuest(formData) {
   const session = await auth();
   if (!session) {
@@ -35,7 +36,37 @@ export async function updateGuest(formData) {
   revalidatePath("/account/profile");
 }
 
-export async function deleteReservation(bookingId) {
+// Create a new booking
+export async function createBooking(bookingData, formData) {
+  const session = await auth();
+  if (!session) {
+    throw new Error("ログインしてね 😄");
+  }
+
+  const newBooking = {
+    ...bookingData,
+    guestId: session.user.guestId,
+    numGuests: Number(formData.get("numGuests")),
+    observations: formData.get("observations").slice(0, 500),
+    extraPrice: 0,
+    totalPrice: bookingData.cabinPrice,
+    isPaid: false,
+    hasBreakfast: false,
+    status: "unconfirmed",
+  };
+  const { error } = await supabase.from("bookings").insert([newBooking]);
+
+  if (error) {
+    throw new Error("予約を作成できませんでした 😄");
+  }
+
+  revalidatePath(`/cabins/${bookingData.cabinId}`);
+
+  redirect("/cabins/thankyou");
+}
+
+// Delete a booking by id
+export async function deleteBooking(bookingId) {
   const session = await auth();
   if (!session) {
     throw new Error("ログインしてね 😄");
@@ -60,27 +91,28 @@ export async function deleteReservation(bookingId) {
   revalidatePath("/account/reservations");
 }
 
+// Update a booking by form data
 export async function updateBooking(formdata) {
   const bookingId = Number(formdata.get("bookingId"));
 
-  // 認証の確認
+  // Check authentication
   const session = await auth();
   if (!session) {
     throw new Error("ログインしてね 😄");
   }
-  // 認可の確認
+  // Check authorization
   const guestBookings = await getBookings(session.user.guestId);
   const guestBookingIds = guestBookings.map((booking) => booking.id);
   if (!guestBookingIds.includes(bookingId)) {
     throw new Error("この予約を更新する権限がありません 😄");
   }
-  // 更新データの準備
+  // Prepare update data
   const updateData = {
     numGuests: Number(formdata.get("numGuests")),
     observations: formdata.get("observations").slice(0, 500),
   };
 
-  // データベースの更新
+  // Database update
   const { error } = await supabase
     .from("bookings")
     .update(updateData)
@@ -88,22 +120,24 @@ export async function updateBooking(formdata) {
     .select()
     .single();
 
-  // エラー処理
+  // Error handling
   if (error) {
     throw new Error("予約を更新できませんでした 😄");
   }
 
-  // キャッシュの再検証
+  // Revalidate path
   revalidatePath(`/account/reservations/edit/${bookingId}`);
 
-  // 処理後のリダイレクト
+  // Redirect to reservations page
   redirect("/account/reservations");
 }
 
+// Sign in action
 export async function signInAction() {
   await signIn("google", { redirectTo: "/account" });
 }
 
+// Sign out action
 export async function signOutAction() {
   await signOut({ redirectTo: "/" });
 }

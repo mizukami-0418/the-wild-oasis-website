@@ -7,6 +7,7 @@ export const metadata = {
   title: "Update profile",
 };
 
+// Profile Page to update guest information
 export default async function Page() {
   const session = await auth();
   const guest = await getGuest(session.user.email);
@@ -14,12 +15,11 @@ export default async function Page() {
   return (
     <div>
       <h2 className="font-semibold text-2xl text-accent-400 mb-4">
-        Update your guest profile
+        プロフィール情報の更新
       </h2>
 
       <p className="text-lg mb-8 text-primary-200">
-        Providing the following information will make your check-in process
-        faster and smoother. See you soon!
+        以下の情報を提供することで、チェックインプロセスをより迅速かつスムーズにできます。お会いできることを楽しみにしております！
       </p>
 
       <UpdateProfileForm guest={guest}>

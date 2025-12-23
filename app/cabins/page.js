@@ -9,13 +9,15 @@ export const metadata = {
   title: "Cabins",
 };
 
+// Cabin List Page with Filter and Suspense
 export default async function Page({ searchParams }) {
-  const filter = searchParams?.capacity ?? "all";
+  const sp = await searchParams;
+  const filter = sp?.capacity ?? "all";
 
   return (
     <div>
       <h1 className="text-4xl mb-5 text-accent-400 font-medium">
-        Our Luxury Cabins
+        しあわせなキャビンでの休暇
       </h1>
       <p className="text-primary-200 text-lg mb-10">
         イタリアのドロミテ山脈の中心に位置する、居心地が良く、それでいて贅沢なキャビン。

@@ -1,15 +1,16 @@
 import Link from "next/link";
 
+// Login Message Component prompting users to log in for reservations
 function LoginMessage() {
   return (
     <div className="grid bg-primary-800 ">
       <p className="text-center text-xl py-12 self-center">
-        Please{" "}
+        予約をするには、
+        <br />
         <Link href="/login" className="underline text-accent-500">
-          login
+          ログイン
         </Link>{" "}
-        to reserve this
-        <br /> cabin right now
+        をしてください。
       </p>
     </div>
   );
