@@ -1,30 +1,31 @@
-import { eachDayOfInterval } from 'date-fns';
+import { eachDayOfInterval } from "date-fns";
+import { supabase } from "./supabase";
+import { notFound } from "next/navigation";
 
 /////////////
 // GET
-
+// Get a single cabin by cabin's id
 export async function getCabin(id) {
   const { data, error } = await supabase
-    .from('cabins')
-    .select('*')
-    .eq('id', id)
+    .from("cabins")
+    .select("*")
+    .eq("id", id)
     .single();
-
-  // For testing
-  // await new Promise((res) => setTimeout(res, 1000));
 
   if (error) {
     console.error(error);
+    notFound();
   }
 
   return data;
 }
 
+// Get regularPrice and discount by cabin's id
 export async function getCabinPrice(id) {
   const { data, error } = await supabase
-    .from('cabins')
-    .select('regularPrice, discount')
-    .eq('id', id)
+    .from("cabins")
+    .select("regularPrice, discount")
+    .eq("id", id)
     .single();
 
   if (error) {
@@ -34,15 +35,16 @@ export async function getCabinPrice(id) {
   return data;
 }
 
+// Get all cabins data
 export const getCabins = async function () {
   const { data, error } = await supabase
-    .from('cabins')
-    .select('id, name, maxCapacity, regularPrice, discount, image')
-    .order('name');
+    .from("cabins")
+    .select("id, name, maxCapacity, regularPrice, discount, image")
+    .order("name");
 
   if (error) {
     console.error(error);
-    throw new Error('Cabins could not be loaded');
+    throw new Error("Cabins could not be loaded");
   }
 
   return data;
@@ -50,10 +52,10 @@ export const getCabins = async function () {
 
 // Guests are uniquely identified by their email address
 export async function getGuest(email) {
-  const { data, error } = await supabase
-    .from('guests')
-    .select('*')
-    .eq('email', email)
+  const { data } = await supabase
+    .from("guests")
+    .select("*")
+    .eq("email", email)
     .single();
 
   // No error here! We handle the possibility of no guest in the sign in callback
@@ -61,38 +63,40 @@ export async function getGuest(email) {
 }
 
 export async function getBooking(id) {
-  const { data, error, count } = await supabase
-    .from('bookings')
-    .select('*')
-    .eq('id', id)
+  const { data, error } = await supabase
+    .from("bookings")
+    .select("*")
+    .eq("id", id)
     .single();
 
   if (error) {
     console.error(error);
-    throw new Error('Booking could not get loaded');
+    throw new Error("予約情報が取得できませんでした 😭");
   }
 
   return data;
 }
 
+// Get all bookings for a specific guest
 export async function getBookings(guestId) {
-  const { data, error, count } = await supabase
-    .from('bookings')
+  const { data, error } = await supabase
+    .from("bookings")
     // We actually also need data on the cabins as well. But let's ONLY take the data that we actually need, in order to reduce downloaded data.
     .select(
-      'id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)'
+      "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)"
     )
-    .eq('guestId', guestId)
-    .order('startDate');
+    .eq("guestId", guestId)
+    .order("startDate");
 
   if (error) {
     console.error(error);
-    throw new Error('Bookings could not get loaded');
+    throw new Error("Bookings could not get loaded");
   }
 
   return data;
 }
 
+// Get all booked dates for a specific cabin
 export async function getBookedDatesByCabinId(cabinId) {
   let today = new Date();
   today.setUTCHours(0, 0, 0, 0);
@@ -100,14 +104,14 @@ export async function getBookedDatesByCabinId(cabinId) {
 
   // Getting all bookings
   const { data, error } = await supabase
-    .from('bookings')
-    .select('*')
-    .eq('cabinId', cabinId)
+    .from("bookings")
+    .select("*")
+    .eq("cabinId", cabinId)
     .or(`startDate.gte.${today},status.eq.checked-in`);
 
   if (error) {
     console.error(error);
-    throw new Error('Bookings could not get loaded');
+    throw new Error("予約済みの日付が取得できませんでした 😭");
   }
 
   // Converting to actual dates to be displayed in the date picker
@@ -123,46 +127,49 @@ export async function getBookedDatesByCabinId(cabinId) {
   return bookedDates;
 }
 
+// Get settings (only one row)
 export async function getSettings() {
-  const { data, error } = await supabase.from('settings').select('*').single();
+  const { data, error } = await supabase.from("settings").select("*").single();
 
   if (error) {
     console.error(error);
-    throw new Error('Settings could not be loaded');
+    throw new Error("設定情報が取得できませんでした 😭");
   }
 
   return data;
 }
 
+// Get countries from external API
 export async function getCountries() {
   try {
     const res = await fetch(
-      'https://restcountries.com/v2/all?fields=name,flag'
+      "https://restcountries.com/v2/all?fields=name,flag"
     );
     const countries = await res.json();
     return countries;
   } catch {
-    throw new Error('Could not fetch countries');
+    throw new Error("国情報が取得できませんでした 😭");
   }
 }
 
 /////////////
 // CREATE
-
+// Create a new guest
 export async function createGuest(newGuest) {
-  const { data, error } = await supabase.from('guests').insert([newGuest]);
+  const { data, error } = await supabase.from("guests").insert([newGuest]);
 
   if (error) {
     console.error(error);
-    throw new Error('Guest could not be created');
+    throw new Error("新規ゲストが作成できませんでした 😭");
   }
 
   return data;
 }
 
+// Create a new booking
 export async function createBooking(newBooking) {
   const { data, error } = await supabase
-    .from('bookings')
+    .from("bookings")
     .insert([newBooking])
     // So that the newly created object gets returned!
     .select()
@@ -170,7 +177,7 @@ export async function createBooking(newBooking) {
 
   if (error) {
     console.error(error);
-    throw new Error('Booking could not be created');
+    throw new Error("新規予約が作成できませんでした 😭");
   }
 
   return data;
@@ -182,43 +189,44 @@ export async function createBooking(newBooking) {
 // The updatedFields is an object which should ONLY contain the updated data
 export async function updateGuest(id, updatedFields) {
   const { data, error } = await supabase
-    .from('guests')
+    .from("guests")
     .update(updatedFields)
-    .eq('id', id)
+    .eq("id", id)
     .select()
     .single();
 
   if (error) {
     console.error(error);
-    throw new Error('Guest could not be updated');
+    throw new Error("ゲスト情報が更新できませんでした 😭");
   }
   return data;
 }
 
+// Update a booking by id
 export async function updateBooking(id, updatedFields) {
   const { data, error } = await supabase
-    .from('bookings')
+    .from("bookings")
     .update(updatedFields)
-    .eq('id', id)
+    .eq("id", id)
     .select()
     .single();
 
   if (error) {
     console.error(error);
-    throw new Error('Booking could not be updated');
+    throw new Error("予約情報が更新できませんでした 😭");
   }
   return data;
 }
 
 /////////////
 // DELETE
-
+// Delete a booking by id
 export async function deleteBooking(id) {
-  const { data, error } = await supabase.from('bookings').delete().eq('id', id);
+  const { data, error } = await supabase.from("bookings").delete().eq("id", id);
 
   if (error) {
     console.error(error);
-    throw new Error('Booking could not be deleted');
+    throw new Error("予約情報が削除できませんでした 😭");
   }
   return data;
 }
